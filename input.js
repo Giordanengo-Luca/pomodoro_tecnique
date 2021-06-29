@@ -1,7 +1,12 @@
 'use strict';
 const inquirer = require('inquirer');
 
-const integerRegex = /^\d+$/;
+const parseInt = value => {
+    if (value.match(/^\d+$/)) {
+      return true;
+    }
+    return 'Valore non valido, il valore deve essere un numero intero';
+};
 const questions = [
     {
       type: 'input',
@@ -11,10 +16,7 @@ const questions = [
         return "5";
       },
       validate(value) {
-        if (value.match(integerRegex)) {
-          return true;
-        }
-        return 'Valore non valido, il valore deve essere un numero intero';
+        return parseInt(value);
       }
     },
     {
@@ -25,10 +27,7 @@ const questions = [
         return "25";
       },
       validate(value) {
-        if (value.match(integerRegex)) {
-          return true;
-        }
-        return 'Valore non valido, il valore deve essere un numero intero';
+        return parseInt(value);
       }
     },
     {
@@ -39,11 +38,8 @@ const questions = [
           return "5";
         },
         validate(value) {
-            if (value.match(integerRegex)) {
-              return true;
-            }
-            return 'Valore non valido, il valore deve essere un numero intero';
-          }
+          return parseInt(value);
+        }
     },
     {
         type: 'input',
@@ -53,11 +49,8 @@ const questions = [
           return "15";
         },
         validate(value) {
-            if (value.match(integerRegex)) {
-              return true;
-            }
-            return 'Valore non valido, il valore deve essere un numero intero';
-          }
+          return parseInt(value);
+        }
     },
     {
         type: 'input',
@@ -67,25 +60,18 @@ const questions = [
           return "4";
         },
         validate(value) {
-            if (value.match(integerRegex)) {
-              return true;
-            }
-            return 'Valore non valido, il valore deve essere un numero intero';
-          }
+          return parseInt(value);
+        }
     },
   ];
   
-const getSettings = () => {
-    return new Promise((resolve, reject) => {
-        inquirer
-        .prompt(questions)
-        .then((answers) => {
-            resolve(answers);
-        })
-        .catch((error) => {
-            reject(errror);
-        });
-    });
+const getSettings = async () => {
+  try {
+    const answers = await inquirer.prompt(questions)
+    return answers;
+  } catch (error) {
+    throw error;
+  }
 }
 
 
