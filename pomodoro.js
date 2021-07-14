@@ -16,16 +16,20 @@ async function pomodoroTecniqueMain(){
 }
 
 function initProgressBars(settings){
-  const multibar = new cliProgress.MultiBar({
-    clearOnComplete: false,
-    hideCursor: true,
-    format: '{task} [{bar}] {percentage}% | {value}/{total}'
+  try {
+    const multibar = new cliProgress.MultiBar({
+      clearOnComplete: false,
+      hideCursor: true,
+      format: '{task} [{bar}] {percentage}% | {value}/{total}'
 
-  }, cliProgress.Presets.shades_grey);
-  const totalWorkBar = multibar.create(settings.totTime * 60, 0, {task:"Lavoro totale\t"});
-  const workBar = multibar.create(settings.workTime, 0, {task:"Sessione lavoro\t"});
-  const breakBar = multibar.create(settings.shortBreakTime, 0, {task:"Pausa corta\t"});
-  return {multibar, totalWorkBar, workBar, breakBar};
+    }, cliProgress.Presets.shades_grey);
+    const totalWorkBar = multibar.create(settings.totTime * 60, 0, {task:"Lavoro totale\t"});
+    const workBar = multibar.create(settings.workTime, 0, {task:"Sessione lavoro\t"});
+    const breakBar = multibar.create(settings.shortBreakTime, 0, {task:"Pausa corta\t"});
+    return {multibar, totalWorkBar, workBar, breakBar};
+  } catch (error) {
+    throw(error);
+  }
 }
 
 async function pomodoroTecnique(settings, bars){
